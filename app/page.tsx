@@ -5,15 +5,8 @@ import Workflow from "@/components/Workflow";
 export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
-      <div className="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center backdrop-blur-md border-b border-white/5">
-        <div className="font-bold text-xl tracking-tighter">BetterChat.</div>
-        <nav className="hidden md:flex gap-6 text-sm text-secondary">
-          <a href="#" className="hover:text-white transition-colors">Features</a>
-          <a href="#" className="hover:text-white transition-colors">Workflow</a>
-          <a href="#" className="hover:text-white transition-colors">Contact</a>
-        </nav>
-      </div>
-
+      {/* We removed the <nav> here because it is now built into Hero.tsx */}
+      
       <Hero />
       <Features />
       <Workflow />
