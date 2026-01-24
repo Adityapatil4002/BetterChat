@@ -15,8 +15,6 @@ import {
   Search,
   Settings,
   LogOut,
-  Bell,
-  Moon,
   Hash,
   User,
   LayoutGrid
@@ -38,33 +36,31 @@ type Message = {
   timestamp: string;
 };
 
-type ChatContext = 'dm' | 'group';
-
-// --- Animation Script ---
+// --- Animation Script (Optimized for Speed) ---
 const SCRIPT_SEQUENCE = [
   // 1. Start in DM
   { type: 'switch', mode: 'dm', name: 'Shivaraj Kolekar', tab: 'friends' },
-  { type: 'delay', ms: 500 },
+  { type: 'delay', ms: 300 }, // Reduced start delay
   { type: 'msg', sender: 'me', text: 'Yo, check out this latency! ⚡️' },
-  { type: 'delay', ms: 800 },
+  { type: 'delay', ms: 400 },
   { type: 'typing', show: true },
-  { type: 'delay', ms: 1200 },
+  { type: 'delay', ms: 800 }, // Faster typing simulation
   { type: 'typing', show: false },
   { type: 'msg', sender: 'other', text: 'Wait, did that send already?', name: 'Shivaraj' },
-  { type: 'delay', ms: 600 },
+  { type: 'delay', ms: 300 },
   { type: 'msg', sender: 'me', text: 'Instant. 14ms global avg.' },
-  { type: 'delay', ms: 1500 },
+  { type: 'delay', ms: 800 }, // Quick pause before switch
   
   // 2. Switch to Group
   { type: 'switch', mode: 'group', name: 'F1 Group', tab: 'groups' },
   { type: 'system', text: 'Shivaraj added you to the group' },
-  { type: 'delay', ms: 500 },
+  { type: 'delay', ms: 400 },
   { type: 'msg', sender: 'other', text: 'Guys, the new socket engine is live.', name: 'Alex' },
-  { type: 'delay', ms: 200 },
+  { type: 'delay', ms: 200 }, // Rapid fire messages
   { type: 'msg', sender: 'other', text: 'Finally! 🚀', name: 'Sarah' },
-  { type: 'delay', ms: 600 },
+  { type: 'delay', ms: 400 },
   { type: 'msg', sender: 'me', text: 'Handling 10k concurrents easy.' },
-  { type: 'delay', ms: 4000 },
+  { type: 'delay', ms: 1500 }, // Short pause before loop restart
 ];
 
 // --- Mock Chat UI Component ---
@@ -81,7 +77,6 @@ const MockChatUI = () => {
   // Scroll Ref
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Fix: Scroll only the container, not the window
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -123,11 +118,12 @@ const MockChatUI = () => {
         else if (step.type === 'msg' || step.type === 'system') {
           const tid = setTimeout(() => {
             if (step.sender === 'me') {
+               // Fast typing effect for 'me'
                setInputText(step.text || '');
                setTimeout(() => {
                  setInputText('');
                  addMessage(step);
-               }, 300);
+               }, 200); // Faster input clear
             } else {
               addMessage(step);
             }
@@ -136,7 +132,8 @@ const MockChatUI = () => {
         }
       });
 
-      const resetTime = setTimeout(runScript, currentTime + 1000);
+      // Loop restart
+      const resetTime = setTimeout(runScript, currentTime + 500);
       timeoutIds.push(resetTime);
     };
 
@@ -325,10 +322,11 @@ const MockChatUI = () => {
             <AnimatePresence initial={false} mode="popLayout">
                 {messages.map((msg) => (
                     <motion.div
+                        layout
                         key={msg.id}
-                        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
                         className={cn(
                             "flex w-full",
                             msg.sender === 'me' ? "justify-end" : 
@@ -370,25 +368,26 @@ const MockChatUI = () => {
             <AnimatePresence>
                 {isTyping && (
                     <motion.div 
-                        initial={{ opacity: 0, y: 5 }}
+                        layout
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
                         className="flex justify-start"
                     >
                         <div className="bg-[#18181b] border border-white/[0.06] rounded-2xl rounded-tl-sm px-4 py-3 flex gap-1.5 items-center">
                             <motion.span 
                                 animate={{ y: [0, -3, 0] }} 
-                                transition={{ repeat: Infinity, duration: 0.6, delay: 0 }}
+                                transition={{ repeat: Infinity, duration: 0.5, delay: 0 }}
                                 className="w-1 h-1 bg-zinc-400 rounded-full" 
                             />
                             <motion.span 
                                 animate={{ y: [0, -3, 0] }} 
-                                transition={{ repeat: Infinity, duration: 0.6, delay: 0.1 }}
+                                transition={{ repeat: Infinity, duration: 0.5, delay: 0.1 }}
                                 className="w-1 h-1 bg-zinc-400 rounded-full" 
                             />
                             <motion.span 
                                 animate={{ y: [0, -3, 0] }} 
-                                transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }}
+                                transition={{ repeat: Infinity, duration: 0.5, delay: 0.2 }}
                                 className="w-1 h-1 bg-zinc-400 rounded-full" 
                             />
                         </div>
@@ -510,21 +509,6 @@ const Features = () => {
                     className="w-full lg:w-[65%] relative"
                 >
                     <MockChatUI />
-
-                    {/* Floating Tech Badge */}
-                    <motion.div 
-                        animate={{ y: [0, -8, 0] }}
-                        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-                        className="absolute -top-6 -right-6 bg-[#0F0F0F] border border-white/10 p-4 rounded-xl shadow-2xl z-20 hidden md:flex items-center gap-3"
-                    >
-                        <div className="relative">
-                            <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-                        </div>
-                        <div>
-                            <div className="text-xs font-bold text-white">Socket Connected</div>
-                            <div className="text-[10px] font-mono text-white/40">Ping: 14ms</div>
-                        </div>
-                    </motion.div>
                 </motion.div>
 
             </div>
