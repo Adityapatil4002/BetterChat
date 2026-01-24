@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowRight, Bot, BrainCircuit, ScanEye, ShieldCheck, User, Zap } from "lucide-react";
+import { ArrowRight, Bot, BrainCircuit, MessageSquare, ScanEye, ShieldCheck, User } from "lucide-react";
 
 /* ===================== NAVBAR ===================== */
 function Navbar() {
@@ -11,27 +11,26 @@ function Navbar() {
       transition={{ duration: 0.8, delay: 0.2 }}
       className="fixed top-0 left-0 w-full px-6 py-6 z-50 pointer-events-none"
     >
-      <div className="absolute left-6 top-6 pointer-events-auto text-lg font-semibold text-white">
+      <div className="absolute left-6 top-6 pointer-events-auto text-xl font-bold tracking-tight text-white">
         BetterChat
       </div>
 
-      <div className="absolute left-1/2 top-6 -translate-x-1/2 pointer-events-auto hidden md:flex items-center bg-[#111]/80 border border-white/10 backdrop-blur-xl rounded-full px-2 py-2">
-        <div className="flex items-center gap-6 px-6 text-xs text-gray-400">
-          <a className="text-white cursor-pointer hover:text-white transition-colors">Product</a>
-          <a className="text-white cursor-pointer hover:text-white transition-colors">Flow</a>
-          <a className="text-white cursor-pointer hover:text-white transition-colors">Integrations</a>
-          <a className="text-white cursor-pointer hover:text-white transition-colors">Pricing</a>
+      <div className="absolute left-1/2 top-6 -translate-x-1/2 pointer-events-auto hidden md:flex items-center bg-[#0A0A0A]/90 border border-white/10 backdrop-blur-xl rounded-full px-2 py-2 shadow-xl">
+        <div className="flex items-center gap-6 px-6 text-xs font-medium text-gray-400">
+          <a className="text-white cursor-pointer hover:text-gray-300 transition-colors">Product</a>
+          <a className="text-white cursor-pointer hover:text-gray-300 transition-colors">Flow</a>
+          <a className="text-white cursor-pointer hover:text-gray-300 transition-colors">Integrations</a>
+          <a className="text-white cursor-pointer hover:text-gray-300 transition-colors">Pricing</a>
         </div>
         <div className="flex items-center gap-2 pl-4 border-l border-white/10">
-          <button className="px-3 py-1.5 text-[10px] bg-white/5 rounded-full flex items-center gap-1 hover:bg-white/10 transition-colors">
-             System Active <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse ml-1"/>
+          <button className="px-3 py-1.5 text-[10px] font-semibold bg-white/5 rounded-full flex items-center gap-1.5 hover:bg-white/10 transition-colors border border-white/5 text-gray-300">
+             System Active <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] animate-pulse"/>
           </button>
         </div>
       </div>
 
-      <div className="absolute right-6 top-6 pointer-events-auto flex items-center gap-2 text-white cursor-pointer hover:opacity-80 transition-opacity">
-        <User className="w-5 h-5 text-gray-300" />
-        <span className="hidden sm:inline text-sm">Sign In</span>
+      <div className="absolute right-6 top-6 pointer-events-auto flex items-center gap-4 text-white cursor-pointer hover:opacity-80 transition-opacity">
+        <span className="hidden sm:inline text-xs font-medium text-gray-300 hover:text-white transition-colors">Sign In</span>
       </div>
     </motion.nav>
   );
@@ -40,10 +39,10 @@ function Navbar() {
 /* ===================== BACKGROUND ===================== */
 function Background() {
   return (
-    <div className="absolute inset-0 bg-black overflow-hidden pointer-events-none">
-      <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-indigo-900/10 blur-[120px]" />
-      <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-emerald-900/5 blur-[100px]" />
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]" />
+    <div className="absolute inset-0 bg-[#000000] overflow-hidden pointer-events-none">
+      <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-950/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-emerald-950/10 blur-[100px] rounded-full" />
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05]" />
     </div>
   );
 }
@@ -51,118 +50,154 @@ function Background() {
 /* ===================== DUAL SIDE FLOW SYSTEM ===================== */
 function DualFlowSystem() {
   
-  // Node Configuration (Updated with requested Features)
+  // LOGIC:
+  // We define a fixed coordinate space (1200x600) to ensure perfect alignment.
+  // The cards are positioned via absolute pixels within this container to match SVG path start points.
+
   const nodes = [
-    // --- Left Side ---
+    // LEFT SIDE
     { 
-      id: 0, label: "Real-time & Groups", sub: "Instant Sync", icon: Zap, color: "text-amber-400", 
-      pos: "top-[25%] left-[10%] md:left-[15%]", side: "left", delay: 0
+      id: 0, label: "Core Messaging", sub: "REAL-TIME & GROUPS", icon: MessageSquare, color: "text-white", 
+      align: "left", x: 1, y: 100, delay: 0 
     },
     { 
-      id: 1, label: "Intent Detection", sub: "Context Aware", icon: ScanEye, color: "text-purple-400", 
-      pos: "bottom-[25%] left-[10%] md:left-[15%]", side: "left", delay: 0.5
+      id: 1, label: "Intent Detection", sub: "CONTEXT AWARE", icon: ScanEye, color: "text-purple-400", 
+      align: "left", x: 1, y: 420, delay: 0.5 
     },
-    // --- Right Side ---
+    // RIGHT SIDE
     { 
-      id: 2, label: "AI Integrations", sub: "Model Agnostic", icon: BrainCircuit, color: "text-blue-400", 
-      pos: "top-[25%] right-[10%] md:right-[15%]", side: "right", delay: 1.0
+      id: 2, label: "Integrations", sub: "APP ECOSYSTEM", icon: BrainCircuit, color: "text-blue-400", 
+      align: "right", x: 1, y: 100, delay: 1.0 
     },
     { 
-      id: 3, label: "Security", sub: "End-to-End Encrypted", icon: ShieldCheck, color: "text-emerald-400", 
-      pos: "bottom-[25%] right-[10%] md:right-[15%]", side: "right", delay: 1.5
+      id: 3, label: "Security", sub: "END-TO-END ENCRYPTED", icon: ShieldCheck, color: "text-emerald-400", 
+      align: "right", x: 1, y: 420, delay: 1.5 
     },
   ];
-
-  // SVG Paths - Sharp L Shapes
-  const paths = {
-      "left-top": "M 150 150 L 300 150 L 450 300",
-      "left-bottom": "M 150 450 L 300 450 L 450 300",
-      "right-top": "M 850 150 L 700 150 L 550 300",
-      "right-bottom": "M 850 450 L 700 450 L 550 300",
-  }
 
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
       
-      {/* 1. SVG Layer for Flow Lines */}
-      {/* Mask ensures lines fade out completely before hitting center text */}
-      <svg className="absolute inset-0 w-full h-full overflow-visible [mask-image:radial-gradient(circle_at_center,transparent_150px,black_350px)]" viewBox="0 0 1000 600" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-              <stop offset="50%" stopColor="rgba(255,255,255,0.8)" />
-              <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-            </linearGradient>
+      {/* Container: 1200px wide, 600px tall. Responsive scaling. */}
+      <div className="w-full max-w-[1200px] h-[600px] relative">
+      
+        {/* 1. SVG LINES */}
+        <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 1200 600">
+            <defs>
+              <linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+                <stop offset="50%" stopColor="rgba(255,255,255,0.8)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+              </linearGradient>
+              <linearGradient id="static-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(255,255,255,0.1)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0.02)" /> 
+              </linearGradient>
+            </defs>
+            
+            {/* 
+               PATHS LOGIC:
+               - Left Cards are approx 260px wide. Line starts at X=260.
+               - Right Cards starts at X=940 (1200-260).
+               - Y positions match the node.y values exactly (140 and 460).
+            */}
 
-            {/* Static Line Gradients (Fading out near center) */}
-            <linearGradient id="static-grad-left" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(255,255,255,0.15)" />
-              <stop offset="80%" stopColor="rgba(255,255,255,0)" /> 
-            </linearGradient>
-            <linearGradient id="static-grad-right" x1="0%" y1="0%" x2="100%" y2="0%">
-               <stop offset="20%" stopColor="rgba(255,255,255,0)" />    
-              <stop offset="100%" stopColor="rgba(255,255,255,0.15)" />
-            </linearGradient>
-          </defs>
+            {/* Left Top */}
+            <g>
+                <path d="M 260 140 L 380 140 L 500 240" stroke="url(#static-grad)" strokeWidth="1" fill="none" />
+                <motion.path d="M 260 140 L 380 140 L 500 240" stroke="url(#flow-grad)" strokeWidth="1.5" fill="none" strokeDasharray="100 600"
+                    initial={{ strokeDashoffset: 700 }} animate={{ strokeDashoffset: 0 }} transition={{ duration: 3, ease: "linear", repeat: Infinity, delay: 0 }} />
+                {/* Connection Dot */}
+                <circle cx="260" cy="140" r="2" fill="white" fillOpacity="0.3" />
+            </g>
+
+            {/* Left Bottom */}
+            <g>
+                <path d="M 260 460 L 380 460 L 500 360" stroke="url(#static-grad)" strokeWidth="1" fill="none" />
+                <motion.path d="M 260 460 L 380 460 L 500 360" stroke="url(#flow-grad)" strokeWidth="1.5" fill="none" strokeDasharray="100 600"
+                    initial={{ strokeDashoffset: 700 }} animate={{ strokeDashoffset: 0 }} transition={{ duration: 3, ease: "linear", repeat: Infinity, delay: 0.5 }} />
+                <circle cx="260" cy="460" r="2" fill="white" fillOpacity="0.3" />
+            </g>
+
+            {/* Right Top */}
+            <g>
+                <path d="M 940 140 L 820 140 L 700 240" stroke="url(#static-grad)" strokeWidth="1" fill="none" />
+                <motion.path d="M 940 140 L 820 140 L 700 240" stroke="url(#flow-grad)" strokeWidth="1.5" fill="none" strokeDasharray="100 600"
+                    initial={{ strokeDashoffset: 700 }} animate={{ strokeDashoffset: 0 }} transition={{ duration: 3, ease: "linear", repeat: Infinity, delay: 1 }} />
+                <circle cx="940" cy="140" r="2" fill="white" fillOpacity="0.3" />
+            </g>
+
+            {/* Right Bottom */}
+            <g>
+                <path d="M 940 460 L 820 460 L 700 360" stroke="url(#static-grad)" strokeWidth="1" fill="none" />
+                <motion.path d="M 940 460 L 820 460 L 700 360" stroke="url(#flow-grad)" strokeWidth="1.5" fill="none" strokeDasharray="100 600"
+                    initial={{ strokeDashoffset: 700 }} animate={{ strokeDashoffset: 0 }} transition={{ duration: 3, ease: "linear", repeat: Infinity, delay: 1.5 }} />
+                <circle cx="940" cy="460" r="2" fill="white" fillOpacity="0.3" />
+            </g>
+        </svg>
+
+        {/* 2. THE CARDS */}
+        {nodes.map((node, index) => {
+          const isLeft = node.align === 'left';
           
-          {nodes.map((node, i) => {
-              const pathKey = `${node.side}-${node.pos.includes('top') ? 'top' : 'bottom'}`;
-              // @ts-ignore
-              const d = paths[pathKey];
-              const staticStrokeUrl = node.side === 'left' ? "url(#static-grad-left)" : "url(#static-grad-right)";
-
-              return (
-                <g key={`path-${i}`}>
-                    {/* Static Background Path */}
-                    <path d={d} stroke={staticStrokeUrl} strokeWidth="1" fill="none" />
+          return (
+            <motion.div
+              key={node.id}
+              initial={{ opacity: 0, x: isLeft ? -20 : 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 + index * 0.1 }}
+              style={{
+                top: node.y,
+                left: isLeft ? node.x : 'auto',
+                right: !isLeft ? node.x : 'auto',
+              }}
+              className="absolute -translate-y-1/2 z-20"
+            >
+                {/* 
+                    CARD CONTAINER 
+                    Width is fixed (w-60 ~ 240px) to ensure line connects to edge perfectly.
+                */}
+                <div className={`
+                  relative w-64 h-20 flex items-center gap-4 p-4
+                  bg-[#0A0A0A] border border-white/10 
+                  rounded-2xl shadow-2xl shadow-black/50
+                  group hover:border-white/20 transition-all duration-300
+                  ${isLeft ? 'flex-row pr-2' : 'flex-row-reverse pl-2 text-right'}
+                `}>
                     
-                    {/* Animated Moving Path */}
-                    <motion.path 
-                        d={d}
-                        stroke="url(#flow-grad)"
-                        strokeWidth="2"
-                        fill="none"
-                        strokeDasharray="100 400"
-                        initial={{ strokeDashoffset: 500 }}
-                        animate={{ strokeDashoffset: 0 }}
-                        transition={{ 
-                            duration: 3, 
-                            ease: "linear", 
-                            repeat: Infinity,
-                            delay: node.delay 
-                        }}
-                    />
-                </g>
-              )
-          })}
-      </svg>
+                    {/* Glowing Backdrop */}
+                    <div className="absolute inset-0 bg-white/5 blur-xl rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
 
-      {/* 2. The 4 Feature Nodes (HTML Cards at start of lines) */}
-      {nodes.map((node, index) => {
-        return (
-          <motion.div
-            key={node.id}
-            initial={{ opacity: 0, x: node.side === 'left' ? -50 : 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.5 + index * 0.2 }}
-            animate={ active => ({ y: [0, -10, 0] })}
-            transition={ active => ({ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 })}
-            className={`absolute ${node.pos} flex flex-col items-center gap-4 z-20 -translate-y-1/2`}
-          >
-              <div className="w-16 h-16 rounded-none border border-white/10 bg-black/50 flex items-center justify-center backdrop-blur-md shadow-[0_0_30px_-10px_rgba(255,255,255,0.2)] relative overflow-hidden group">
-                  <node.icon className={`w-7 h-7 ${node.color} relative z-10`} />
-                  <div className={`absolute inset-0 opacity-20 bg-${node.color.split('-')[1]}-500/30 blur-xl group-hover:opacity-40 transition-opacity`}/>
-              </div>
+                    {/* ICON */}
+                    <div className={`
+                      relative w-12 h-12 rounded-xl bg-white/5 border border-white/5 
+                      flex items-center justify-center shrink-0
+                      group-hover:bg-white/10 transition-colors
+                    `}>
+                        <node.icon className={`w-5 h-5 ${node.color}`} />
+                    </div>
 
-              <div className="text-center">
-                <div className="text-sm font-bold text-white whitespace-nowrap">{node.label}</div>
-                <div className={`text-[10px] uppercase tracking-wider ${node.color} opacity-70`}>
-                    {node.sub}
+                    {/* TEXT */}
+                    <div className="flex flex-col gap-0.5 min-w-0">
+                      <span className="text-sm font-semibold text-gray-100 tracking-tight whitespace-nowrap">{node.label}</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 group-hover:text-gray-400 transition-colors whitespace-nowrap">
+                          {node.sub}
+                      </span>
+                    </div>
+
+                    {/* CONNECTOR POINT (Visual Only - overlaps SVG line start) */}
+                    <div className={`
+                        absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full border border-white/20 bg-[#0A0A0A] z-30
+                        ${isLeft ? '-right-1' : '-left-1'}
+                    `}>
+                        <div className="absolute inset-0 m-auto w-1 h-1 rounded-full bg-white/50" />
+                    </div>
+
                 </div>
-              </div>
-          </motion.div>
-        )
-      })}
+            </motion.div>
+          )
+        })}
+      </div>
     </div>
   )
 }
@@ -177,31 +212,33 @@ export default function Hero() {
       <DualFlowSystem />
 
       {/* Center Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-white/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
       {/* CENTER CONTENT */}
-      <div className="relative z-30 text-center max-w-xl px-4">
+      <div className="relative z-30 text-center max-w-2xl px-4 flex flex-col items-center">
         
+        {/* Latency Badge */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          className="inline-flex items-center gap-2 border border-white/10 bg-black/40 backdrop-blur-md rounded-none px-4 py-1.5 mb-8"
+          className="inline-flex items-center gap-2 border border-yellow-500/20 bg-yellow-500/10 backdrop-blur-sm rounded-full px-3 py-1 mb-8"
         >
-          <Bot className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-          <span className="text-[11px] text-gray-300 tracking-wide uppercase font-semibold">
+          <Bot className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+          <span className="text-[11px] text-yellow-200/90 tracking-wide uppercase font-bold">
             Latency: 14ms
           </span>
         </motion.div>
 
+        {/* Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-[0.9]"
+          className="text-6xl md:text-8xl font-bold tracking-tighter mb-6 leading-[0.95]"
         >
           From Prompt <br />
-          <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-gray-600">
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40">
             to Reality.
           </span>
         </motion.h1>
@@ -212,17 +249,18 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-lg mx-auto mb-10"
         >
-          The first chat interface that doesn't just talk—it executes.
+          The first chat interface that doesn't just talk—it executes complex workflows in real-time.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex justify-center gap-5"
+          className="flex justify-center"
         >
-          <button className="h-12 px-8 rounded-none bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors flex items-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.4)]">
-            Start Flow <ArrowRight className="w-4 h-4" />
+          <button className="group h-12 px-8 rounded-full bg-white text-black text-sm font-bold hover:bg-gray-200 transition-all flex items-center gap-2 shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_-5px_rgba(255,255,255,0.5)]">
+            Start Flow 
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </motion.div>
       </div>
