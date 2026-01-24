@@ -98,7 +98,7 @@ function DualFlowSystem() {
     // LEFT SIDE
     { 
       id: 0, label: "Core Messaging", sub: "REAL-TIME & GROUPS", icon: MessageSquare, color: "text-white", 
-      align: "left", x: 0, y: 120, delay: 0 
+      align: "left", x: 0, y: 80, delay: 0 
     },
     { 
       id: 1, label: "Intent Detection", sub: "CONTEXT AWARE", icon: ScanEye, color: "text-purple-400", 
@@ -107,7 +107,7 @@ function DualFlowSystem() {
     // RIGHT SIDE
     { 
       id: 2, label: "Integrations", sub: "APP ECOSYSTEM", icon: BrainCircuit, color: "text-blue-400", 
-      align: "right", x: 0, y: 120, delay: 1.0 
+      align: "right", x: 0, y: 80, delay: 1.0 
     },
     { 
       id: 3, label: "Security", sub: "END-TO-END ENCRYPTED", icon: ShieldCheck, color: "text-emerald-400", 
@@ -139,15 +139,15 @@ function DualFlowSystem() {
                PATHS LOGIC:
                - Left Cards are 260px wide. Line starts at X=260.
                - Right Cards starts at X=1140 (1400-260).
-               - Y positions match the node.y values exactly (160 and 520).
+               - Y positions match the node.y values exactly (120 and 520).
             */}
 
             {/* Left Top */}
             <g>
-                <path d="M 260 160 L 450 160 Q 550 160 600 240" stroke="url(#static-grad)" strokeWidth="1.5" fill="none" />
-                <motion.path d="M 260 160 L 450 160 Q 550 160 600 240" stroke="url(#flow-grad)" strokeWidth="2" fill="none" strokeDasharray="8 20"
+                <path d="M 260 120 L 450 120 Q 550 120 600 240" stroke="url(#static-grad)" strokeWidth="1.5" fill="none" />
+                <motion.path d="M 260 120 L 450 120 Q 550 120 600 240" stroke="url(#flow-grad)" strokeWidth="2" fill="none" strokeDasharray="8 20"
                     initial={{ strokeDashoffset: 0 }} animate={{ strokeDashoffset: -28 }} transition={{ duration: 1.5, ease: "linear", repeat: Infinity }} />
-                <circle cx="260" cy="160" r="3" fill="white" fillOpacity="0.6">
+                <circle cx="260" cy="120" r="3" fill="white" fillOpacity="0.6">
                   <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" />
                 </circle>
             </g>
@@ -164,10 +164,10 @@ function DualFlowSystem() {
 
             {/* Right Top */}
             <g>
-                <path d="M 1140 160 L 950 160 Q 850 160 800 240" stroke="url(#static-grad)" strokeWidth="1.5" fill="none" />
-                <motion.path d="M 1140 160 L 950 160 Q 850 160 800 240" stroke="url(#flow-grad)" strokeWidth="2" fill="none" strokeDasharray="8 20"
+                <path d="M 1140 120 L 950 120 Q 850 120 800 240" stroke="url(#static-grad)" strokeWidth="1.5" fill="none" />
+                <motion.path d="M 1140 120 L 950 120 Q 850 120 800 240" stroke="url(#flow-grad)" strokeWidth="2" fill="none" strokeDasharray="8 20"
                     initial={{ strokeDashoffset: 0 }} animate={{ strokeDashoffset: -28 }} transition={{ duration: 1.5, ease: "linear", repeat: Infinity, delay: 1 }} />
-                <circle cx="1140" cy="160" r="3" fill="white" fillOpacity="0.6">
+                <circle cx="1140" cy="120" r="3" fill="white" fillOpacity="0.6">
                   <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="1s" />
                 </circle>
             </g>
