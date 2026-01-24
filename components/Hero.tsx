@@ -40,8 +40,48 @@ function Navbar() {
 function Background() {
   return (
     <div className="absolute inset-0 bg-[#000000] overflow-hidden pointer-events-none">
-      <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-950/20 blur-[120px] rounded-full" />
-      <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-emerald-950/10 blur-[100px] rounded-full" />
+      {/* Animated gradient orbs */}
+      <motion.div 
+        className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-950/20 blur-[120px] rounded-full"
+        animate={{ 
+          x: [0, 50, 0],
+          y: [0, -30, 0],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ 
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div 
+        className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-emerald-950/10 blur-[100px] rounded-full"
+        animate={{ 
+          x: [0, -40, 0],
+          y: [0, 40, 0],
+          scale: [1, 1.15, 1]
+        }}
+        transition={{ 
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+      />
+      {/* Subtle moving particles */}
+      <motion.div 
+        className="absolute top-[20%] left-[30%] w-[300px] h-[300px] bg-blue-950/5 blur-[80px] rounded-full"
+        animate={{ 
+          x: [0, 60, 0],
+          y: [0, -50, 0]
+        }}
+        transition={{ 
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2
+        }}
+      />
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05]" />
     </div>
   );
@@ -51,88 +91,95 @@ function Background() {
 function DualFlowSystem() {
   
   // LOGIC:
-  // We define a fixed coordinate space (1200x600) to ensure perfect alignment.
+  // We define a fixed coordinate space (1400x600) to ensure perfect alignment.
   // The cards are positioned via absolute pixels within this container to match SVG path start points.
 
   const nodes = [
     // LEFT SIDE
     { 
       id: 0, label: "Core Messaging", sub: "REAL-TIME & GROUPS", icon: MessageSquare, color: "text-white", 
-      align: "left", x: 1, y: 100, delay: 0 
+      align: "left", x: 0, y: 120, delay: 0 
     },
     { 
       id: 1, label: "Intent Detection", sub: "CONTEXT AWARE", icon: ScanEye, color: "text-purple-400", 
-      align: "left", x: 1, y: 420, delay: 0.5 
+      align: "left", x: 0, y: 480, delay: 0.5 
     },
     // RIGHT SIDE
     { 
       id: 2, label: "Integrations", sub: "APP ECOSYSTEM", icon: BrainCircuit, color: "text-blue-400", 
-      align: "right", x: 1, y: 100, delay: 1.0 
+      align: "right", x: 0, y: 120, delay: 1.0 
     },
     { 
       id: 3, label: "Security", sub: "END-TO-END ENCRYPTED", icon: ShieldCheck, color: "text-emerald-400", 
-      align: "right", x: 1, y: 420, delay: 1.5 
+      align: "right", x: 0, y: 480, delay: 1.5 
     },
   ];
 
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
       
-      {/* Container: 1200px wide, 600px tall. Responsive scaling. */}
-      <div className="w-full max-w-[1200px] h-[600px] relative">
+      {/* Container: 1400px wide, 600px tall. Responsive scaling. */}
+      <div className="w-full max-w-[1400px] h-[600px] relative">
       
         {/* 1. SVG LINES */}
-        <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 1200 600">
+        <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 1400 600">
             <defs>
               <linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-                <stop offset="50%" stopColor="rgba(255,255,255,0.8)" />
+                <stop offset="50%" stopColor="rgba(255,255,255,0.9)" />
                 <stop offset="100%" stopColor="rgba(255,255,255,0)" />
               </linearGradient>
               <linearGradient id="static-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(255,255,255,0.1)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,0.02)" /> 
+                <stop offset="0%" stopColor="rgba(255,255,255,0.15)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0.05)" /> 
               </linearGradient>
             </defs>
             
             {/* 
                PATHS LOGIC:
-               - Left Cards are approx 260px wide. Line starts at X=260.
-               - Right Cards starts at X=940 (1200-260).
-               - Y positions match the node.y values exactly (140 and 460).
+               - Left Cards are 260px wide. Line starts at X=260.
+               - Right Cards starts at X=1140 (1400-260).
+               - Y positions match the node.y values exactly (160 and 520).
             */}
 
             {/* Left Top */}
             <g>
-                <path d="M 260 140 L 380 140 L 500 240" stroke="url(#static-grad)" strokeWidth="1" fill="none" />
-                <motion.path d="M 260 140 L 380 140 L 500 240" stroke="url(#flow-grad)" strokeWidth="1.5" fill="none" strokeDasharray="100 600"
-                    initial={{ strokeDashoffset: 700 }} animate={{ strokeDashoffset: 0 }} transition={{ duration: 3, ease: "linear", repeat: Infinity, delay: 0 }} />
-                {/* Connection Dot */}
-                <circle cx="260" cy="140" r="2" fill="white" fillOpacity="0.3" />
+                <path d="M 260 160 L 450 160 Q 550 160 600 240" stroke="url(#static-grad)" strokeWidth="1.5" fill="none" />
+                <motion.path d="M 260 160 L 450 160 Q 550 160 600 240" stroke="url(#flow-grad)" strokeWidth="2" fill="none" strokeDasharray="8 20"
+                    initial={{ strokeDashoffset: 0 }} animate={{ strokeDashoffset: -28 }} transition={{ duration: 1.5, ease: "linear", repeat: Infinity }} />
+                <circle cx="260" cy="160" r="3" fill="white" fillOpacity="0.6">
+                  <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" />
+                </circle>
             </g>
 
             {/* Left Bottom */}
             <g>
-                <path d="M 260 460 L 380 460 L 500 360" stroke="url(#static-grad)" strokeWidth="1" fill="none" />
-                <motion.path d="M 260 460 L 380 460 L 500 360" stroke="url(#flow-grad)" strokeWidth="1.5" fill="none" strokeDasharray="100 600"
-                    initial={{ strokeDashoffset: 700 }} animate={{ strokeDashoffset: 0 }} transition={{ duration: 3, ease: "linear", repeat: Infinity, delay: 0.5 }} />
-                <circle cx="260" cy="460" r="2" fill="white" fillOpacity="0.3" />
+                <path d="M 260 520 L 450 520 Q 550 520 600 440" stroke="url(#static-grad)" strokeWidth="1.5" fill="none" />
+                <motion.path d="M 260 520 L 450 520 Q 550 520 600 440" stroke="url(#flow-grad)" strokeWidth="2" fill="none" strokeDasharray="8 20"
+                    initial={{ strokeDashoffset: 0 }} animate={{ strokeDashoffset: -28 }} transition={{ duration: 1.5, ease: "linear", repeat: Infinity, delay: 0.5 }} />
+                <circle cx="260" cy="520" r="3" fill="white" fillOpacity="0.6">
+                  <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="0.5s" />
+                </circle>
             </g>
 
             {/* Right Top */}
             <g>
-                <path d="M 940 140 L 820 140 L 700 240" stroke="url(#static-grad)" strokeWidth="1" fill="none" />
-                <motion.path d="M 940 140 L 820 140 L 700 240" stroke="url(#flow-grad)" strokeWidth="1.5" fill="none" strokeDasharray="100 600"
-                    initial={{ strokeDashoffset: 700 }} animate={{ strokeDashoffset: 0 }} transition={{ duration: 3, ease: "linear", repeat: Infinity, delay: 1 }} />
-                <circle cx="940" cy="140" r="2" fill="white" fillOpacity="0.3" />
+                <path d="M 1140 160 L 950 160 Q 850 160 800 240" stroke="url(#static-grad)" strokeWidth="1.5" fill="none" />
+                <motion.path d="M 1140 160 L 950 160 Q 850 160 800 240" stroke="url(#flow-grad)" strokeWidth="2" fill="none" strokeDasharray="8 20"
+                    initial={{ strokeDashoffset: 0 }} animate={{ strokeDashoffset: -28 }} transition={{ duration: 1.5, ease: "linear", repeat: Infinity, delay: 1 }} />
+                <circle cx="1140" cy="160" r="3" fill="white" fillOpacity="0.6">
+                  <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="1s" />
+                </circle>
             </g>
 
             {/* Right Bottom */}
             <g>
-                <path d="M 940 460 L 820 460 L 700 360" stroke="url(#static-grad)" strokeWidth="1" fill="none" />
-                <motion.path d="M 940 460 L 820 460 L 700 360" stroke="url(#flow-grad)" strokeWidth="1.5" fill="none" strokeDasharray="100 600"
-                    initial={{ strokeDashoffset: 700 }} animate={{ strokeDashoffset: 0 }} transition={{ duration: 3, ease: "linear", repeat: Infinity, delay: 1.5 }} />
-                <circle cx="940" cy="460" r="2" fill="white" fillOpacity="0.3" />
+                <path d="M 1140 520 L 950 520 Q 850 520 800 440" stroke="url(#static-grad)" strokeWidth="1.5" fill="none" />
+                <motion.path d="M 1140 520 L 950 520 Q 850 520 800 440" stroke="url(#flow-grad)" strokeWidth="2" fill="none" strokeDasharray="8 20"
+                    initial={{ strokeDashoffset: 0 }} animate={{ strokeDashoffset: -28 }} transition={{ duration: 1.5, ease: "linear", repeat: Infinity, delay: 1.5 }} />
+                <circle cx="1140" cy="520" r="3" fill="white" fillOpacity="0.6">
+                  <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="1.5s" />
+                </circle>
             </g>
         </svg>
 
@@ -155,7 +202,7 @@ function DualFlowSystem() {
             >
                 {/* 
                     CARD CONTAINER 
-                    Width is fixed (w-60 ~ 240px) to ensure line connects to edge perfectly.
+                    Width is fixed (w-64 ~ 256px) to ensure line connects to edge perfectly.
                 */}
                 <div className={`
                   relative w-64 h-20 flex items-center gap-4 p-4
